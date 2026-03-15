@@ -1,13 +1,6 @@
-# Hi there, I'm lcx 👋
+# Hi there, I'm Chenxu Li 👋
 
 Welcome to the source code of my personal academic homepage. 
-
-I am currently a Ph.D. student at the School of Computer Science, Nanjing University. My research primary focuses on leveraging artificial intelligence for robotic systems.
-
-## 🔬 Research Interests
-- **Embodied AI**
-- **Mobile Manipulation**
-- **Robotics** 
 
 ## 🛠️ About This Website
 This repository contains the static source code for my personal website, featuring a modern, responsive Glassmorphism (Apple-style) design. 
