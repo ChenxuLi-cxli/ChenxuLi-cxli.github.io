@@ -3,17 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChenxuLi - Personal Homepage</title>
+    <meta name="description" content="Chenxu Li — Ph.D. student at Nanjing University. Research in embodied AI, mobile manipulation, and robotics.">
+    <title>Chenxu Li · Nanjing University</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <nav class="site-nav-bar" aria-label="Quick navigation">
+        <div class="site-nav-inner">
+            <ul class="site-nav-list">
+                <li><a href="#site-top" class="site-nav-link">Home</a></li>
+                <li><a href="#about" class="site-nav-link">About</a></li>
+                <li><a href="#research" class="site-nav-link">Research</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-body">
     <div class="bg-shape shape1"></div>
     <div class="bg-shape shape2"></div>
 
     <div class="container">
-        <header class="glass-card profile-section">
+        <header id="site-top" class="glass-card profile-section">
             <div class="profile-info">
-                <img src="assets/avatar.jpg" alt="cxli" class="profile-avatar">
+                <img src="assets/avatar.jpg" alt="Portrait of Chenxu Li" class="profile-avatar">
                 
                 <div class="profile-text">
                     <h1>Chenxu Li</h1>
@@ -21,51 +33,89 @@
                     <p class="affiliation">School of Computer Science, Nanjing University</p>
                     
                     <div class="social-links">
-                        <a href="chenxuli@smail.nju.edu.cn" class="glass-btn">Email</a>
-                        <a href="assets/cv.pdf" target="_blank" class="glass-btn">CV</a>
-                        <a href="https://github.com/ChenxuLi-cxli" target="_blank" class="glass-btn">GitHub</a>
-                        <a href="https://scholar.google.com/citations?hl=en&user=5DPYlnYAAAAJ" target="_blank" class="glass-btn">Google Scholar</a>
+                        <a href="mailto:chenxuli@smail.nju.edu.cn" class="glass-btn" rel="noopener">Email</a>
+                        <a href="assets/cv.pdf" target="_blank" class="glass-btn" rel="noopener">CV</a>
+                        <a href="https://github.com/ChenxuLi-cxli" target="_blank" class="glass-btn" rel="noopener noreferrer">GitHub</a>
+                        <a href="https://scholar.google.com/citations?user=5DPYlnYAAAAJ&amp;hl=en" target="_blank" class="glass-btn" rel="noopener noreferrer">Google Scholar</a>
                     </div>
                 </div>
             </div>
         </header>
 
-        <section class="glass-card content-section">
+        <main>
+        <section id="about" class="glass-card content-section">
             <h3>About Me</h3>
-            <p>I am a Ph.D. student at the School of Computer Science, Nanjing University, advised by Prof. Jing Huo. Previously, I received my B.S. in Computer Science from Taishan (Honors) College, Shandong University.</p>
-        </section>
-
-        <section class="glass-card content-section">
-            <h3>Research Interests</h3>
-            <div class="tags">
+            <p>I am a Ph.D. student in the School of Computer Science at Nanjing University, advised by <a href="https://cs.nju.edu.cn/huojing/" target="_blank" rel="noopener noreferrer" class="inline-link">Prof. Jing Huo</a>.</p>
+            <p>My research interests lie in the intersection of embodied AI, mobile manipulation, and robotics.</p>
+            <!-- <div class="tags">
                 <span class="glass-tag">Embodied AI</span>
                 <span class="glass-tag">Mobile Manipulation</span>
                 <span class="glass-tag">Robotics</span>
-            </div>
-            <p class="desc-text">My research interests lie in the intersection of embodied AI, mobile manipulation, and robotics.</p>
+            </div> -->
+
+            <h4 class="bio-subheading">Education</h4>
+            <ul class="edu-list">
+                <li><span class="edu-degree">Ph.D. in Computer Science</span>, Nanjing University, China <span class="edu-meta">(in progress)</span></li>
+                <li><span class="edu-degree">B.S. in Computer Science</span>, Taishan (Honors) College, Shandong University, China</li>
+            </ul>
         </section>
 
-        <section class="glass-card content-section">
+        <section id="research" class="glass-card content-section">
             <h3>Research</h3>
-            
-            <div class="research-item">
-                <div class="research-content">
-                    <h4>MoMaStage</h4>
-                    <p>A research project focused on creating a framework for handling long-horizon complex tasks in mobile manipulation environments. Specifically, we propose MoMaStage, a framework for long-horizon mobile manipulation that drives VLMs to translate instructions into valid skill chains via a Skill-State Graph and a hierarchical skill library, with closed-loop proprioceptive verification for guided replanning upon failure.</p>
-                    
-                    <div class="research-links">
-                        <a href="https://chenxuli-cxli.github.io/MoMaStage/" target="_blank" class="glass-link">[Project Page]</a>
-                        <a href="https://arxiv.org/abs/2603.08383" target="_blank" class="glass-link">[arXiv]</a>
-                        <a href="https://github.com/ChenxuLi-cxli/MoMaStage" target="_blank" class="glass-link">[GitHub]</a>
+            <p class="pub-note">Asterisk (<span class="nowrap">*</span>) denotes equal contribution; dagger (<span class="nowrap">†</span>) denotes the corresponding author.</p>
+
+            <div class="pub-list">
+                <article class="pub-entry">
+                    <div class="pub-body">
+                        <h4 class="pub-title">MoMaStage: Skill-State Graph Guided Planning and Closed-Loop Execution for Long-Horizon Indoor Mobile Manipulation</h4>
+                        <p class="pub-authors"><span class="pub-author-self">Chenxu Li</span><span class="eq">*</span>, Zixuan Chen<span class="eq">*</span>, Yetao Li, Jiapeng Xu, Hongyu Ding, Jieqi Shi, Jing Huo, Yang Gao</p>
+                        <p class="pub-venue">arXiv preprint arXiv:2603.08383, 2026.</p>
+                        <p class="pub-summary">We propose MoMaStage, a structured vision-language framework for long-horizon indoor mobile manipulation that grounds VLM-based planning within a topology-aware Skill-State Graph and Hierarchical Skill Library, enabling logically consistent, closed-loop skill execution and semantic replanning without explicit scene mapping, thereby substantially improving robustness, planning efficiency, and task success across simulation and real-world environments.</p>
+                        <div class="pub-links">
+                            <a href="https://arxiv.org/abs/2603.08383" target="_blank" class="glass-link" rel="noopener noreferrer">[arXiv]</a>
+                            <a href="https://chenxuli-cxli.github.io/MoMaStage/" target="_blank" class="glass-link" rel="noopener noreferrer">[Project]</a>
+                            <a href="https://github.com/ChenxuLi-cxli/MoMaStage" target="_blank" class="glass-link" rel="noopener noreferrer">[Code]</a>
+                        </div>
                     </div>
-                </div>
-                <img src="assets/momastage.png" alt="MoMaStage Architecture or Demo" class="research-image">
+                    <img src="assets/MoMaStage.png" alt="Teaser figure for MoMaStage: skill-state graph and long-horizon mobile manipulation" class="pub-teaser" width="240" height="152" loading="lazy">
+                </article>
+
+                <article class="pub-entry">
+                    <div class="pub-body">
+                        <h4 class="pub-title">V-Dreamer: Automating Robotic Simulation and Trajectory Synthesis via Video Generation Priors</h4>
+                        <p class="pub-authors">Songjia He<span class="eq">*</span>, Zixuan Chen<span class="eq">*</span>, Hongyu Ding, Dian Shao, Jieqi Shi, <span class="pub-author-self">Chenxu Li</span>, Jing Huo, Yang Gao</p>
+                        <p class="pub-venue">arXiv preprint arXiv:2603.18811, 2026.</p>
+                        <p class="pub-summary">We present V-Dreamer, a fully automated framework that converts natural language instructions into open-vocabulary, simulation-ready manipulation environments and executable robot trajectories by combining physically grounded 3D scene generation with video-driven motion priors and visual-kinematic alignment, enabling scalable data synthesis and robust sim-to-real generalization for robotic manipulation.</p>
+                        <div class="pub-links">
+                            <a href="https://arxiv.org/abs/2603.18811" target="_blank" class="glass-link" rel="noopener noreferrer">[arXiv]</a>
+                        </div>
+                    </div>
+                    <img src="assets/V-Dreamer.png" alt="Teaser figure for V-Dreamer: simulation and trajectory synthesis via video generation" class="pub-teaser" width="240" height="152" loading="lazy">
+                </article>
+
+                <article class="pub-entry">
+                    <div class="pub-body">
+                        <h4 class="pub-title">RadioShock: Over-the-Air Adversarial Attacks on Wireless Communication</h4>
+                        <p class="pub-authors">Wenhao Li, <span class="pub-author-self">Chenxu Li</span>, Guoming Zhang, Zhijian Huang, Gang Qu, Xiuzhen Cheng, Jun Luo, Pengfei Hu<span class="eq">†</span></p>
+                        <p class="pub-venue"><strong class="pub-venue-name">IEEE Transactions on Dependable and Secure Computing (TDSC)</strong>, 2026.</p>
+                        <p class="pub-summary">We present RadioShock, a practical over-the-air adversarial attack framework for wireless communication systems that leverages dynamic channel-state adaptation and universal compact perturbation generation to achieve covert real-world attacks, significantly degrading the performance of deep learning–based communication models under realistic channel conditions.</p>
+                        <div class="pub-links">
+                            <a href="https://ieeexplore.ieee.org/abstract/document/11503687" target="_blank" class="glass-link" rel="noopener noreferrer">[IEEE Xplore]</a>
+                        </div>
+                    </div>
+                    <img src="assets/RadioShock.png" alt="Teaser figure for RadioShock: over-the-air adversarial attacks on wireless communication" class="pub-teaser" width="240" height="152" loading="lazy">
+                </article>
             </div>
         </section>
+        </main>
 
-        <footer class="glass-card footer-section">
-            <p>&copy; 2026 cxli. All rights reserved.</p>
-        </footer>
     </div>
+    </div>
+
+    <footer class="site-footer-bar">
+        <div class="site-footer-inner">
+            <p class="site-footer-text">&copy; 2026 Chenxu Li</p>
+        </div>
+    </footer>
 </body>
 </html>
