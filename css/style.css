@@ -1,13 +1,36 @@
-/* 全局设置，使用 Apple 默认字体栈 */
+/* 学术暗色主题：Apple 液态玻璃 */
 :root {
     --nav-anchor-gap: 1.75rem;
+    --chrome-glass-bg: linear-gradient(
+        180deg,
+        rgba(11, 16, 24, 0.78) 0%,
+        rgba(11, 16, 24, 0.62) 100%
+    );
+    --chrome-glass-blur: blur(22px) saturate(180%);
+    --overscroll-chrome-size: 100vh;
+
+    /* 字体：保留 Apple 系统字体栈 */
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+        "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-serif: var(--font-sans);
+
+    /* 文字层级颜色：低饱和、稳重 */
+    --color-text: #e6e8ee;
+    --color-heading: #f1f2f6;
+    --color-muted: #a8acb6;
+    --color-dim: #7d828d;
+    --color-rule: rgba(255, 255, 255, 0.09);
+
+    /* 学术蓝：柔和、不喧宾夺主 */
+    --color-link: #8fb3dc;
+    --color-link-hover: #b9d0ea;
+    --color-accent: #8fb3dc;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
 html {
@@ -29,20 +52,50 @@ html {
 }
 
 #site-top,
-#about,
+#news,
 #research {
     scroll-margin-top: calc(var(--site-nav-height, 3rem) + var(--nav-anchor-gap, 1.75rem));
 }
 
 body {
-    background-color: #0d0d0d;
-    color: #f5f5f7;
+    /* 深石墨蓝灰底色：学术、内敛、稳重，仍保持暗色调 */
+    background-color: #0b1018;
+    background-image:
+        /* 顶部柔和深蓝晕染，营造层次但不喧宾夺主 */
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(56, 78, 120, 0.22), transparent 60%),
+        /* 底部更深的青墨色微光 */
+        radial-gradient(ellipse 60% 40% at 50% 110%, rgba(30, 45, 70, 0.3), transparent 65%);
+    background-attachment: fixed;
+    color: var(--color-text);
+    font-family: var(--font-sans);
     font-size: 1rem;
-    line-height: 1.7;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
     padding: 0;
+}
+
+/* 标题：与正文同字体栈（Apple 系统字体），统一字色 */
+h1, h2, h3, h4 {
+    font-family: var(--font-sans);
+    color: var(--color-heading);
+    letter-spacing: -0.005em;
+}
+
+/* 细密点阵纹理：学术站常见的低调底纹，固定不滚动 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-position: 0 0;
+    pointer-events: none;
+    z-index: -2;
 }
 
 .page-body {
@@ -50,29 +103,29 @@ body {
     padding: 2rem 1rem;
 }
 
-/* 动态背景色块 */
+/* 背景装饰色块：低饱和深蓝/青墨，作为液态玻璃 saturate 的色源 */
 .bg-shape {
     position: fixed;
     border-radius: 50%;
-    filter: blur(80px);
+    filter: blur(100px);
     z-index: -1;
-    opacity: 0.5;
+    opacity: 0.42;
 }
 
 .shape1 {
-    width: 400px;
-    height: 400px;
-    background: #1e3a8a;
-    top: -100px;
-    left: -100px;
+    width: 520px;
+    height: 520px;
+    background: #2a4778;
+    top: -160px;
+    left: -160px;
 }
 
 .shape2 {
-    width: 500px;
-    height: 500px;
-    background: #3b0764;
-    bottom: -150px;
-    right: -100px;
+    width: 600px;
+    height: 600px;
+    background: #1f3450;
+    bottom: -200px;
+    right: -160px;
 }
 
 /* 页面主容器：大屏可更宽，整体仍限制在易读宽度内，并随视口收窄 */
@@ -85,18 +138,36 @@ body {
     gap: 2rem;
 }
 
-/* 顶部贯通导航条 */
+/* 顶部贯通导航条：液态玻璃 */
 .site-nav-bar {
     --site-nav-height: 3rem;
     position: sticky;
     top: 0;
     z-index: 200;
     width: 100%;
-    background: rgba(13, 13, 13, 0.78);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+    background: var(--chrome-glass-bg);
+    backdrop-filter: var(--chrome-glass-blur);
+    -webkit-backdrop-filter: var(--chrome-glass-blur);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 1px 0 rgba(0, 0, 0, 0.4),
+        0 6px 22px rgba(0, 0, 0, 0.28);
+}
+
+/* 顶部弹性滚动：向上延伸导航栏玻璃区域，避免露出页面背景 */
+.site-nav-bar::before {
+    content: "";
+    position: fixed;
+    top: calc(-1 * var(--overscroll-chrome-size));
+    left: 0;
+    right: 0;
+    height: calc(var(--overscroll-chrome-size) + 1px);
+    background: var(--chrome-glass-bg);
+    backdrop-filter: var(--chrome-glass-blur);
+    -webkit-backdrop-filter: var(--chrome-glass-blur);
+    z-index: 199;
+    pointer-events: none;
 }
 
 .site-nav-inner {
@@ -117,19 +188,20 @@ body {
 
 .site-nav-link {
     display: inline-block;
-    color: #c4c4cc;
+    color: var(--color-muted);
     text-decoration: none;
-    font-size: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
     font-weight: 500;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
     padding: 0.5rem 1rem;
-    border-radius: 6px;
+    border-radius: 4px;
     transition: color 0.15s ease, background-color 0.15s ease;
 }
 
 .site-nav-link:hover {
-    color: #fafafa;
-    background-color: rgba(255, 255, 255, 0.06);
+    color: var(--color-heading);
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 /* 主页各内容块之间的纵向间距（header / main / footer 之间也沿用 container gap） */
@@ -139,85 +211,384 @@ main {
     gap: 2rem;
 }
 
-/* 核心：Apple 玻璃拟物化卡片样式 */
+/* Apple 液态玻璃卡片：强 blur + saturate，顶部 specular，hover 上浮 */
 .glass-card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.055) 0%,
+        rgba(255, 255, 255, 0.025) 45%,
+        rgba(255, 255, 255, 0.018) 100%
+    );
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 24px;
     padding: 2rem;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+        0 8px 32px rgba(0, 0, 0, 0.38);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 顶部 specular highlight：液态玻璃标志性光感 */
+.glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.22),
+        rgba(255, 255, 255, 0.04) 35%,
+        transparent 70%
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+            mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.glass-card > * {
+    position: relative;
+    z-index: 2;
 }
 
 .glass-card:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.16),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+        0 14px 40px rgba(0, 0, 0, 0.46);
 }
 
-/* === 头部布局更新 === */
-.profile-section {
-    padding: 2.5rem 2rem;
+/* === 首页 + About 合并区块 === */
+.intro-section {
+    padding: 2.2rem 2rem;
 }
 
-/* 电脑端默认：左右排列 */
-.profile-info {
+.intro-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
+}
+
+.intro-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.65rem;
+    width: fit-content;
+    max-width: 100%;
+    min-width: 0;
+    margin-inline: auto;
+}
+
+.intro-about {
+    width: 100%;
+}
+
+.intro-about h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.85rem;
+    color: var(--color-heading);
+    border-bottom: 1px solid var(--color-rule);
+    padding-bottom: 0.45rem;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+}
+
+.intro-about p {
+    color: var(--color-muted);
+    font-size: 1rem;
+}
+
+.news-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+}
+
+.news-item {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 0.65rem 1rem;
+    align-items: baseline;
+}
+
+.news-date {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-dim);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.news-text {
+    margin: 0;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+.news-highlight {
+    color: var(--color-heading);
+    font-weight: 600;
+}
+
+/* Profile 子模块：上部左图右文，下部简介 */
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.profile-identity {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 2rem;
-    text-align: left;
+    gap: 1.5rem;
+    text-align: center;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+}
+
+.profile-identity--stacked {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+    width: 100%;
+    margin-inline: auto;
+}
+
+.profile-identity--stacked .profile-photo {
+    margin-inline: auto;
+}
+
+.profile-identity:not(.profile-identity--stacked) .profile-photo {
+    margin: 0;
+    align-self: center;
+}
+
+.profile-identity--stacked .profile-content {
+    width: 100%;
+    gap: 0.85rem;
+}
+
+.profile-identity--stacked .profile-identity-text {
+    align-items: center;
+    text-align: center;
+}
+
+.profile-identity--stacked .profile-identity-text h1 {
+    font-size: 2.1rem;
+}
+
+.profile-photo {
+    position: relative;
+    flex: 0 0 auto;
+    width: var(--profile-photo-size, 8rem);
+    height: var(--profile-photo-size, 8rem);
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background-color: rgba(255, 255, 255, 0.04);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+        0 8px 26px rgba(0, 0, 0, 0.42);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 顶部光环：仅在边框附近形成 specular */
+.profile-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.32),
+        rgba(255, 255, 255, 0.06) 30%,
+        transparent 60%
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+            mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+}
+
+.profile-photo:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.26);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.22),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+        0 12px 32px rgba(0, 0, 0, 0.48);
 }
 
 .profile-avatar {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease;
-    flex-shrink: 0; /* 防止头像被挤压变扁 */
+    object-position: center;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
 }
 
 .profile-avatar:hover {
-    transform: scale(1.05);
+    transform: none;
 }
 
-.profile-text {
-    flex: 1;
+.profile-content {
+    flex: 0 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.95rem;
 }
 
-.profile-text h1 {
-    font-size: 3.1rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0.2rem;
-    background: linear-gradient(135deg, #fff, #a1a1aa);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.profile-identity-text {
+    flex: 0 0 auto;
+    min-width: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.18rem;
+}
+
+.profile-identity-text h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    margin: 0 0 0.18rem;
+    color: var(--color-heading);
+    white-space: nowrap;
 }
 
 .subtitle {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    color: #a1a1aa;
+    color: var(--color-muted);
+    line-height: 1.2;
+    margin: 0.1rem 0 0;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
 }
 
 .affiliation {
-    font-size: 1rem;
-    color: #71717a;
-    margin-top: 0.3rem;
+    font-size: 0.98rem;
+    color: var(--color-dim);
+    line-height: 1.4;
+    margin: 0.18rem 0 0;
+    max-width: 100%;
 }
 
-/* 社交链接按钮 */
+.profile-bio {
+    width: 100%;
+    text-align: left;
+    padding-top: 0.25rem;
+    border-top: 1px solid var(--color-rule);
+}
+
+.profile-bio p {
+    color: var(--color-text);
+    font-size: 1.02rem;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* 社交链接：在对应区域内居中 */
 .social-links {
     display: flex;
-    justify-content: flex-start; /* 电脑端靠左对齐 */
-    gap: 1rem;
-    margin-top: 1.2rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.55rem;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+.social-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 50%;
+    text-decoration: none;
+    color: #e4e4e7;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.09) 0%,
+        rgba(255, 255, 255, 0.04) 60%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.22),
+        0 4px 14px rgba(0, 0, 0, 0.28);
+    transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.social-icon-btn:hover {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.18) 0%,
+        rgba(255, 255, 255, 0.08) 60%,
+        rgba(255, 255, 255, 0.04) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.32);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.26),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.26),
+        0 8px 22px rgba(0, 0, 0, 0.36);
+}
+
+.social-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    display: block;
 }
 
 .glass-btn {
@@ -242,34 +613,36 @@ main {
 
 /* === 内容区域排版 === */
 .content-section h3 {
-    font-size: 1.625rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: #e4e4e7;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.5rem;
+    color: var(--color-heading);
+    border-bottom: 1px solid var(--color-rule);
+    padding-bottom: 0.45rem;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
 }
 
 .content-section p {
-    color: #a1a1aa;
+    color: var(--color-muted);
     font-size: 1rem;
 }
 
 .inline-link {
-    color: #93c5fd;
+    color: var(--color-link);
     text-decoration: none;
-    border-bottom: 1px solid rgba(147, 197, 253, 0.35);
+    border-bottom: 1px solid rgba(143, 179, 220, 0.35);
     transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .inline-link:hover {
-    color: #bfdbfe;
-    border-bottom-color: rgba(191, 219, 254, 0.6);
+    color: var(--color-link-hover);
+    border-bottom-color: rgba(185, 208, 234, 0.7);
 }
 
 .edu-list {
     list-style: none;
-    color: #a1a1aa;
+    color: var(--color-text);
     font-size: 1rem;
     display: flex;
     flex-direction: column;
@@ -278,111 +651,200 @@ main {
 
 .edu-list li {
     padding-left: 1rem;
-    border-left: 2px solid rgba(96, 165, 250, 0.35);
+    line-height: 1.55;
+    border-left: 2px solid rgba(143, 179, 220, 0.45);
 }
 
 .edu-degree {
-    color: #e4e4e7;
+    color: var(--color-heading);
     font-weight: 600;
 }
 
 .edu-meta {
-    color: #71717a;
+    color: var(--color-dim);
     font-size: 0.92rem;
 }
 
 .pub-note {
-    font-size: 1rem;
-    color: #71717a;
-    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+    color: var(--color-dim);
+    margin-bottom: 1.35rem;
     line-height: 1.55;
 }
 
 .pub-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    align-items: start;
 }
 
-.pub-entry {
+/* 2 列测量：临时用 grid 获取卡片宽度下的高度 */
+.pub-list--measure-2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 2 列排版：按列纵向堆叠，第三篇紧贴同列上一篇 */
+.pub-list--cols-2 {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 1.35rem;
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    padding: 1.25rem 1.5rem;
+    gap: 1.5rem;
+}
+
+.pub-list--cols-2 > .pub-col {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.pub-list--cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.pub-entry {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: auto;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.022) 45%,
+        rgba(255, 255, 255, 0.012) 100%
+    );
+    backdrop-filter: blur(18px) saturate(180%);
+    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.22),
+        0 6px 22px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pub-entry:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.26),
+        0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* 顶部光环：液态玻璃边框 specular */
+.pub-entry::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.22),
+        rgba(255, 255, 255, 0.04) 30%,
+        transparent 65%
+    );
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+            mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pub-entry > * {
+    position: relative;
+    z-index: 2;
 }
 
 .pub-body {
-    flex: 1;
     min-width: 0;
+    padding: 1rem 1.2rem 1.2rem;
 }
 
 .pub-teaser {
-    width: 240px;
-    max-width: 38%;
+    width: 100%;
     height: auto;
+    max-width: none;
+    display: block;
     flex-shrink: 0;
-    border-radius: 12px;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background-color: #1a1a1a;
-    align-self: center;
-}
-
-.pub-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    color: #f4f4f5;
-    margin: 0 0 0.5rem;
-    line-height: 1.35;
-}
-
-.pub-summary {
-    font-size: 1.02rem;
-    color: #a1a1aa;
-    margin: 0 0 0.65rem;
-    line-height: 1.55;
-}
-
-.pub-authors {
-    font-size: 1.02rem;
-    color: #a1a1aa;
-    margin-bottom: 0.35rem;
-    line-height: 1.5;
-}
-
-.pub-authors .eq {
-    color: #93c5fd;
-    font-weight: 600;
-}
-
-/* 本人姓名：加粗 + 轻微高亮，便于在作者列表中扫描 */
-.pub-author-self {
-    font-weight: 700;
-    color: #f0f9ff;
-    text-shadow: 0 0 24px rgba(56, 189, 248, 0.35);
-}
-
-.pub-venue {
-    font-size: 1rem;
-    color: #a1a1aa;
-    margin-bottom: 0.75rem;
-    line-height: 1.45;
-}
-
-.pub-venue-name {
-    font-weight: 700;
-    color: #e4e4e7;
+    border: none;
+    border-bottom: 1px solid var(--color-rule);
+    border-radius: 0;
+    background-color: #11161f;
 }
 
 .pub-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.85rem 1rem;
+    gap: 0.5rem 0.85rem;
+    margin-top: 0.85rem;
+}
+
+.pub-title {
+    font-size: 1.075rem;
+    font-weight: 600;
+    color: var(--color-heading);
+    margin: 0 0 0.4rem;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+}
+
+.pub-summary {
+    font-size: 0.98rem;
+    color: var(--color-muted);
+    margin: 0 0 0.55rem;
+    line-height: 1.55;
+}
+
+.pub-authors {
+    font-size: 0.98rem;
+    color: var(--color-text);
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+}
+
+/* 共同一作 * / 通讯 † 改为上标，符合论文署名习惯 */
+.pub-authors .eq {
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.78em;
+    vertical-align: super;
+    line-height: 0;
+    margin-left: 0.05em;
+}
+
+/* 本人姓名：仅加粗 + 主色，无光晕 */
+.pub-author-self {
+    font-weight: 700;
+    color: var(--color-heading);
+}
+
+.pub-venue {
+    font-size: 0.95rem;
+    color: var(--color-dim);
+    font-style: italic;
+    margin-bottom: 0.55rem;
+    line-height: 1.45;
+}
+
+.pub-venue-name {
+    font-weight: 600;
+    font-style: normal;
+    color: var(--color-heading);
 }
 
 .nowrap {
@@ -437,73 +899,82 @@ main {
 }
 
 .glass-link {
-    color: #60a5fa; 
+    color: var(--color-link);
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
-    transition: color 0.3s ease;
-    padding: 0.2rem 0;
+    transition: color 0.2s ease;
+    padding: 0;
+    letter-spacing: 0.01em;
 }
 
 .glass-link:hover {
-    color: #93c5fd;
+    color: var(--color-link-hover);
     text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
-/* 底部贯通条 */
+/* 底部贯通条：液态玻璃 */
 .site-footer-bar {
+    --site-footer-height: 3.25rem;
+    position: relative;
+    z-index: 200;
     width: 100%;
     margin-top: 0;
-    background: rgba(13, 13, 13, 0.78);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.35);
+    background: var(--chrome-glass-bg);
+    backdrop-filter: var(--chrome-glass-blur);
+    -webkit-backdrop-filter: var(--chrome-glass-blur);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+        0 -1px 0 rgba(0, 0, 0, 0.4),
+        0 -6px 22px rgba(0, 0, 0, 0.28);
+}
+
+/* 底部弹性滚动：向下延伸页脚玻璃区域，避免露出页面背景 */
+.site-footer-bar::after {
+    content: attr(data-overscroll-label);
+    position: fixed;
+    bottom: calc(-1 * var(--overscroll-chrome-size));
+    left: 0;
+    right: 0;
+    height: calc(var(--overscroll-chrome-size) + 1px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 1rem;
+    background: var(--chrome-glass-bg);
+    backdrop-filter: var(--chrome-glass-blur);
+    -webkit-backdrop-filter: var(--chrome-glass-blur);
+    color: var(--color-dim);
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    z-index: 199;
+    pointer-events: none;
 }
 
 .site-footer-inner {
     max-width: min(72rem, calc(100vw - 2rem));
     margin: 0 auto;
-    padding: 1rem 0.25rem;
+    padding: 0.85rem 0.25rem;
     text-align: center;
 }
 
 .site-footer-text {
     margin: 0;
-    font-size: 1rem;
-    color: #a1a1aa;
-    letter-spacing: 0.02em;
+    font-size: 0.9rem;
+    color: var(--color-dim);
+    letter-spacing: 0.04em;
 }
 
-/* === 响应式设计：移动端适配 (屏幕宽度小于 650px 时触发) === */
+/* === 响应式设计 === */
 @media (max-width: 650px) {
-    /* 头部信息变回上下居中堆叠 */
-    .profile-info {
-        flex-direction: column;
-        text-align: center;
-        gap: 1rem;
-    }
-    
-    /* 头像稍微缩小一点 */
-    .profile-avatar {
-        width: 120px;
-        height: 120px;
-    }
-    
-    /* 社交链接居中 */
-    .social-links {
-        justify-content: center;
+    .intro-section {
+        padding: 2rem 1.35rem;
     }
 
-    .pub-entry {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .pub-teaser {
-        width: 100%;
-        max-width: none;
-        order: -1;
-        margin-bottom: 0.25rem;
+    .news-item {
+        grid-template-columns: 1fr;
+        gap: 0.35rem;
     }
 }
