@@ -18,6 +18,13 @@
         </div>
     </nav>
 
+    <!-- overscroll 玻璃延伸层：放在 fixed + overflow:hidden 的视口容器内，
+         避免子层 layout box 超出视口被 Chrome 算入 root scrollHeight。 -->
+    <div class="overscroll-chrome" aria-hidden="true">
+        <div class="overscroll-chrome__top"></div>
+        <div class="overscroll-chrome__bottom"></div>
+    </div>
+
     <div class="page-body">
     <div class="bg-shape shape1"></div>
     <div class="bg-shape shape2"></div>
@@ -133,12 +140,13 @@
     </div>
     </div>
 
-    <footer class="site-footer-bar" data-overscroll-label="© 2026 Chenxu Li">
+    <footer class="site-footer-bar">
         <div class="site-footer-inner">
             <p class="site-footer-text">&copy; 2026 Chenxu Li</p>
         </div>
     </footer>
     <script src="js/intro-layout.js"></script>
     <script src="js/pub-layout.js"></script>
+    <script src="js/overscroll-chrome.js"></script>
 </body>
 </html>

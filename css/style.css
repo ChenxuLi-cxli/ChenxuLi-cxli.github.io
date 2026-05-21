@@ -1,12 +1,13 @@
 /* 学术暗色主题：Apple 液态玻璃 */
 :root {
     --nav-anchor-gap: 1.75rem;
+    /* chrome 玻璃：顶/底栏 —— 降低不透明度让蓝色背景透出来 */
     --chrome-glass-bg: linear-gradient(
         180deg,
-        rgba(11, 16, 24, 0.78) 0%,
-        rgba(11, 16, 24, 0.62) 100%
+        rgba(8, 14, 26, 0.55) 0%,
+        rgba(8, 14, 26, 0.35) 100%
     );
-    --chrome-glass-blur: blur(22px) saturate(180%);
+    --chrome-glass-blur: blur(20px) saturate(170%);
     --overscroll-chrome-size: 100vh;
 
     /* 字体：保留 Apple 系统字体栈 */
@@ -21,10 +22,10 @@
     --color-dim: #7d828d;
     --color-rule: rgba(255, 255, 255, 0.09);
 
-    /* 学术蓝：柔和、不喧宾夺主 */
-    --color-link: #8fb3dc;
-    --color-link-hover: #b9d0ea;
-    --color-accent: #8fb3dc;
+    /* 蓝色主调：鲜亮但克制，符合学术风格 */
+    --color-link: #93c5fd;
+    --color-link-hover: #bfdbfe;
+    --color-accent: #60a5fa;
 }
 
 * {
@@ -37,6 +38,9 @@ html {
     scroll-behavior: smooth;
     /* ~18px 正文字号，接近 yzhu.io 一类学术主页的常见体量 */
     font-size: 112.5%;
+    background-color: #050910;
+    /* 用 clip 而非 hidden，避免 html 变成滚动容器 */
+    overflow-x: clip;
 }
 
 @media (max-width: 650px) {
@@ -58,14 +62,8 @@ html {
 }
 
 body {
-    /* 深石墨蓝灰底色：学术、内敛、稳重，仍保持暗色调 */
-    background-color: #0b1018;
-    background-image:
-        /* 顶部柔和深蓝晕染，营造层次但不喧宾夺主 */
-        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(56, 78, 120, 0.22), transparent 60%),
-        /* 底部更深的青墨色微光 */
-        radial-gradient(ellipse 60% 40% at 50% 110%, rgba(30, 45, 70, 0.3), transparent 65%);
-    background-attachment: fixed;
+    /* 透明：让 body::after 的渐变背景层透出来；html 已有 #050910 兜底 */
+    background-color: transparent;
     color: var(--color-text);
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -74,9 +72,69 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    overflow-x: hidden;
+    /* 关键：不要在 body 上设置 overflow-x，否则 Chrome 会把 body 升级为滚动容器，
+       并把 .site-nav-bar::before / .site-footer-bar::after 的 fixed -100vh
+       延伸层算进 scrollHeight，凭空多出一屏可滚动空白（Safari 不会）。
+       横向裁切已经在 html 上以 overflow-x: clip 处理。 */
     padding: 0;
+}
+
+/* 背景渐变层：用 fixed 伪元素替代 background-attachment: fixed
+   学术蓝色调：深蓝黑底 + sky/azure/cyan 霓虹光晕 mesh */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    background-color: #050910;
+    background-image:
+        /* 左上：sky blue glow */
+        radial-gradient(38rem 30rem at 2% 4%, rgba(14, 165, 233, 0.28), transparent 70%),
+        /* 右上：azure blue glow */
+        radial-gradient(34rem 28rem at 98% 12%, rgba(59, 130, 246, 0.22), transparent 72%),
+        /* 右下：cyan glow */
+        radial-gradient(40rem 30rem at 98% 92%, rgba(34, 211, 238, 0.20), transparent 72%),
+        /* 左下：deep navy 微光 */
+        radial-gradient(34rem 28rem at -2% 88%, rgba(37, 99, 235, 0.18), transparent 72%),
+        /* 中央非常淡的蓝色，让中部不全黑 */
+        radial-gradient(60rem 45rem at 50% 55%, rgba(30, 64, 175, 0.06), transparent 75%),
+        /* 整体暗底：近黑深蓝渐变 */
+        linear-gradient(180deg, #050912 0%, #07101e 50%, #050912 100%);
+    pointer-events: none;
+}
+
+/* 极客感网格底纹：细密 sky-blue 线 + 点阵双层 */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+        /* 垂直线 */
+        linear-gradient(to right,  rgba(125, 211, 252, 0.05) 1px, transparent 1px),
+        /* 水平线 */
+        linear-gradient(to bottom, rgba(125, 211, 252, 0.05) 1px, transparent 1px),
+        /* 点阵微光 */
+        radial-gradient(rgba(147, 197, 253, 0.06) 1px, transparent 1px);
+    background-size:
+        72px 72px,
+        72px 72px,
+        24px 24px;
+    background-position: 0 0, 0 0, 0 0;
+    /* 边缘渐隐成圆角晕，避免硬切 */
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 55%, transparent 100%);
+            mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 55%, transparent 100%);
+    pointer-events: none;
+    z-index: -2;
+}
+
+.page-body {
+    position: relative;
+    flex: 1 0 auto;
+    padding: 2rem 1rem;
 }
 
 /* 标题：与正文同字体栈（Apple 系统字体），统一字色 */
@@ -86,46 +144,31 @@ h1, h2, h3, h4 {
     letter-spacing: -0.005em;
 }
 
-/* 细密点阵纹理：学术站常见的低调底纹，固定不滚动 */
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
-    background-size: 22px 22px;
-    background-position: 0 0;
-    pointer-events: none;
-    z-index: -2;
-}
-
-.page-body {
-    position: relative;
-    padding: 2rem 1rem;
-}
-
-/* 背景装饰色块：低饱和深蓝/青墨，作为液态玻璃 saturate 的色源 */
+/* 背景装饰色块：sky / azure / cyan，学术蓝霓虹光晕 */
 .bg-shape {
     position: fixed;
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(110px);
     z-index: -1;
-    opacity: 0.42;
+    opacity: 0.50;
+    mix-blend-mode: screen;
 }
 
 .shape1 {
-    width: 520px;
-    height: 520px;
-    background: #2a4778;
-    top: -160px;
-    left: -160px;
+    width: 560px;
+    height: 560px;
+    background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 60%, transparent 75%);
+    top: -180px;
+    left: -180px;
 }
 
 .shape2 {
-    width: 600px;
-    height: 600px;
-    background: #1f3450;
-    bottom: -200px;
-    right: -160px;
+    width: 620px;
+    height: 620px;
+    background: radial-gradient(circle, #22d3ee 0%, #0e7490 55%, transparent 75%);
+    bottom: -220px;
+    right: -180px;
+    opacity: 0.40;
 }
 
 /* 页面主容器：大屏可更宽，整体仍限制在易读宽度内，并随视口收窄 */
@@ -143,6 +186,7 @@ body::before {
     --site-nav-height: 3rem;
     position: sticky;
     top: 0;
+    flex-shrink: 0;
     z-index: 200;
     width: 100%;
     background: var(--chrome-glass-bg);
@@ -155,19 +199,41 @@ body::before {
         0 6px 22px rgba(0, 0, 0, 0.28);
 }
 
-/* 顶部弹性滚动：向上延伸导航栏玻璃区域，避免露出页面背景 */
-.site-nav-bar::before {
-    content: "";
+/* 顶/底贯通条本身保留 sticky/relative，不再画 overscroll 延伸（移至下方独立容器） */
+.site-nav-bar::before,
+.site-footer-bar::after {
+    content: none;
+}
+
+/* overscroll 玻璃延伸层 —— fixed 视口包裹容器 + overflow: hidden 裁切子层 layout，
+   避免子层超出视口的 layout box 被 Chrome 算入 root scrollHeight（Safari 不会）。 */
+.overscroll-chrome {
     position: fixed;
-    top: calc(-1 * var(--overscroll-chrome-size));
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 199;
+}
+
+.overscroll-chrome__top,
+.overscroll-chrome__bottom {
+    position: absolute;
     left: 0;
     right: 0;
-    height: calc(var(--overscroll-chrome-size) + 1px);
+    height: var(--overscroll-chrome-size, 100vh);
     background: var(--chrome-glass-bg);
     backdrop-filter: var(--chrome-glass-blur);
     -webkit-backdrop-filter: var(--chrome-glass-blur);
-    z-index: 199;
-    pointer-events: none;
+}
+
+.overscroll-chrome__top {
+    top: 0;
+    transform: translateY(-100%);
+}
+
+.overscroll-chrome__bottom {
+    bottom: 0;
+    transform: translateY(100%);
 }
 
 .site-nav-inner {
@@ -211,18 +277,18 @@ main {
     gap: 2rem;
 }
 
-/* Apple 液态玻璃卡片：强 blur + saturate，顶部 specular，hover 上浮 */
+/* Apple 液态玻璃卡片：适度 blur，保留可辨识的霓虹背景色 */
 .glass-card {
     position: relative;
     isolation: isolate;
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.055) 0%,
-        rgba(255, 255, 255, 0.025) 45%,
-        rgba(255, 255, 255, 0.018) 100%
+        rgba(255, 255, 255, 0.045) 0%,
+        rgba(255, 255, 255, 0.018) 45%,
+        rgba(255, 255, 255, 0.012) 100%
     );
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    backdrop-filter: blur(16px) saturate(170%);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
     border: 1px solid rgba(255, 255, 255, 0.09);
     border-radius: 24px;
     padding: 2rem;
@@ -555,13 +621,13 @@ main {
     color: #e4e4e7;
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.09) 0%,
-        rgba(255, 255, 255, 0.04) 60%,
-        rgba(255, 255, 255, 0.02) 100%
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.035) 60%,
+        rgba(255, 255, 255, 0.018) 100%
     );
     border: 1px solid rgba(255, 255, 255, 0.14);
-    backdrop-filter: blur(18px) saturate(180%);
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(14px) saturate(170%);
+    -webkit-backdrop-filter: blur(14px) saturate(170%);
     box-shadow:
         inset 0 1px 0 rgba(255, 255, 255, 0.18),
         inset 0 -1px 0 rgba(0, 0, 0, 0.22),
@@ -631,13 +697,13 @@ main {
 .inline-link {
     color: var(--color-link);
     text-decoration: none;
-    border-bottom: 1px solid rgba(143, 179, 220, 0.35);
+    border-bottom: 1px solid rgba(147, 197, 253, 0.40);
     transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .inline-link:hover {
     color: var(--color-link-hover);
-    border-bottom-color: rgba(185, 208, 234, 0.7);
+    border-bottom-color: rgba(191, 219, 254, 0.75);
 }
 
 .edu-list {
@@ -652,7 +718,7 @@ main {
 .edu-list li {
     padding-left: 1rem;
     line-height: 1.55;
-    border-left: 2px solid rgba(143, 179, 220, 0.45);
+    border-left: 2px solid rgba(96, 165, 250, 0.55);
 }
 
 .edu-degree {
@@ -713,12 +779,12 @@ main {
     height: auto;
     background: linear-gradient(
         180deg,
-        rgba(255, 255, 255, 0.05) 0%,
-        rgba(255, 255, 255, 0.022) 45%,
-        rgba(255, 255, 255, 0.012) 100%
+        rgba(255, 255, 255, 0.04) 0%,
+        rgba(255, 255, 255, 0.016) 45%,
+        rgba(255, 255, 255, 0.01) 100%
     );
-    backdrop-filter: blur(18px) saturate(180%);
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
+    backdrop-filter: blur(14px) saturate(170%);
+    -webkit-backdrop-filter: blur(14px) saturate(170%);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 18px;
     overflow: hidden;
@@ -918,6 +984,7 @@ main {
 .site-footer-bar {
     --site-footer-height: 3.25rem;
     position: relative;
+    flex-shrink: 0;
     z-index: 200;
     width: 100%;
     margin-top: 0;
@@ -931,27 +998,7 @@ main {
         0 -6px 22px rgba(0, 0, 0, 0.28);
 }
 
-/* 底部弹性滚动：向下延伸页脚玻璃区域，避免露出页面背景 */
-.site-footer-bar::after {
-    content: attr(data-overscroll-label);
-    position: fixed;
-    bottom: calc(-1 * var(--overscroll-chrome-size));
-    left: 0;
-    right: 0;
-    height: calc(var(--overscroll-chrome-size) + 1px);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 1rem;
-    background: var(--chrome-glass-bg);
-    backdrop-filter: var(--chrome-glass-blur);
-    -webkit-backdrop-filter: var(--chrome-glass-blur);
-    color: var(--color-dim);
-    font-size: 0.9rem;
-    letter-spacing: 0.04em;
-    z-index: 199;
-    pointer-events: none;
-}
+/* 底部 ::after 已并入上方 overscroll-chrome 容器，原伪元素禁用 */
 
 .site-footer-inner {
     max-width: min(72rem, calc(100vw - 2rem));
